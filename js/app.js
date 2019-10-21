@@ -5,7 +5,6 @@
 var leftImage = null;
 var rightImage = null;
 var centeredImage = null;
-var numberOfRounds = 25;
 
 
 function Products(head, src) {
@@ -17,6 +16,7 @@ function Products(head, src) {
     Products.all.push(this);
 }
 Products.rounds = 0
+var numberOfRounds = 25;
 Products.all = [];
 Products.appeared = [];
 
@@ -45,8 +45,8 @@ new Products('Wine Glass', 'img/wine-glass.jpg');
 
 //IDs
 Products.leftImage = document.getElementById('leftimg');
-Products.centeredImage = document.getElementById('centerimg');
 Products.rightImage = document.getElementById('rightimg');
+Products.centeredImage = document.getElementById('centerimg');
 
 console.log('Products.all: ', Products.all);
 
@@ -60,22 +60,23 @@ function allProducts() {
     leftImageItem.setAttribute('src', leftImage.src);
     var leftHead = document.getElementById('lefthead');
     leftHead.textContent = leftImage.head;
+    
+    var rightImageItem = document.getElementById('rightimg');
+    rightImageItem.setAttribute('src', rightImage.src);
+    var rightHead = document.getElementById('righthead');
+    rightHead.textContent = rightImage.head;
 
     var centerdImageItem = document.getElementById('centerimg');
     centerdImageItem.setAttribute('src', centeredImage.src);
     var centeredHead = document.getElementById('centerhead');
     centeredHead.textContent = centeredImage.head;
 
-    var rightImageItem = document.getElementById('rightimg');
-    rightImageItem.setAttribute('src', rightImage.src);
-    var rightHead = document.getElementById('righthead');
-    rightHead.textContent = rightImage.head;
 
 
     //How many time each product appear
     leftImage.viewsCounter++;
-    centeredImage.viewsCounter++;
     rightImage.viewsCounter++;
+    centeredImage.viewsCounter++;
 
 
 }
@@ -118,69 +119,57 @@ function clicker(event) {
     }
 
     //How many time each product has clicked
-    clickedProduct.clickCounter++;
-    Products.rounds++
-    console.log('rounds: ', Products.rounds);
+    if (clickedProduct) {
 
+        clickedProduct.clickCounter++;
+        Products.rounds++
+        selection();
+        allProducts();
+
+        // remove the event listener
+        if (Products.rounds === 25) {
+
+            alert('You\'ve Consumed Your Clicks');
+
+            document.getElementById("container").removeEventListener('click', clicker);
+            finalList();
+
+        } else {
+            allProducts();
+        }
+    }
+
+    console.log('rounds: ', Products.rounds);
     console.log('clickedProduct: ', clickedProduct);
     console.log('clickCounter: ', clickedProduct.clickCounter);
-    selection();
-    allProducts();
 
 
-     // remove the event listeners?????
-    if (Products.rounds === numberOfRounds) {
-
-        alert('No more clicking for you!');
-
-        Products.rounds.removeEventListener('click', clicker);
-        
-console.log(finalList());
-    }
 }
+
 
 document.getElementById("container").addEventListener('click', clicker);
 selection();
 allProducts();
-finalList();
+
+
+
+selection();
+allProducts();
 
 function finalList(){
-    var ul = document.getElementById("list")
-    var pro = Products.all 
-    for(var j=0; j<Products.all; J++){
-        ul.appendChild(li)
-        list =li.textContent = pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times."
-       
+
+    var list = document.getElementById("list");
+    var li = document.createElement('li')
+    list.appendChild(li)
+    for (var i = 0; i < Products.all.length; i++) {
+        var pro = Products.all[i]
+        li = document.createElement('li');
+        list.appendChild(li);
+        li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
+
+        
+        
     }
-    return list;
+ 
 }
-
-
-// Products.leftHead = document.getElementById('lefthead');
-// Products.centeredHead = document.getElementById('centerhead');
-// Products.rightHead = document.getElementById('righthead');
-
-// Products.leftitem = null;
-// Products.centeritem = null;
-// Products.rightitem = null;
-
-
-
-//the random function
-// function randomProduct() {
-//     var random = Math.floor(Math.random() * Products.all.length);
-//     return Products.all[random];
-// }
-// var leftImageElement = Products.leftImage;
-// var centerImageElement = Products.centeredImage
-// var rightImageElement = Products.rightImage;
-
-// leftImageElement.setAttribute('src', Goat.leftObject.src);
-// leftImageElement.setAttribute('src', Goat.leftObject.src);
-// rightImageElement.setAttribute('src', Goat.rightObject.src);
-
-
-// Products.leftHead.textContent = Products.leftitem.head;
-// Products.centerHead.textContent = Products.centeritem.head;
-// Products.rightHead.textContent = Products.rightitem.head;
 
