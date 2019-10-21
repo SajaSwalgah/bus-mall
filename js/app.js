@@ -132,13 +132,14 @@ function clicker(event) {
             alert('You\'ve Consumed Your Clicks');
 
             document.getElementById("container").removeEventListener('click', clicker);
-            finalList();
+            // finalList();
+            myChart()
 
         } else {
             allProducts();
         }
     }
-
+     
     console.log('rounds: ', Products.rounds);
     console.log('clickedProduct: ', clickedProduct);
     console.log('clickCounter: ', clickedProduct.clickCounter);
@@ -156,20 +157,83 @@ allProducts();
 selection();
 allProducts();
 
-function finalList(){
 
-    var list = document.getElementById("list");
-    var li = document.createElement('li')
-    list.appendChild(li)
+function myChart() {
+    var headArr = [];
+    var clickArr = [];
+    var viewArr = [];
     for (var i = 0; i < Products.all.length; i++) {
-        var pro = Products.all[i]
-        li = document.createElement('li');
-        list.appendChild(li);
-        li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
-
-        
-        
+      var exact = Products.all[i];
+      headArr.push(exact.title + 'Click');
+      headArr.push(exact.title + 'View');
+      clickArr.push(exact.clickCounter);
+      viewArr.push(exact.viewsCounter);
+      
     }
- 
-}
+
+var ctx = document.getElementById('chart').getContext('2d');
+console.log('Chart : ', Chart);
+var chart = new Chart(ctx, {
+  type: 'bar',
+
+  data: {
+    labels: ['Bag ', 'Banana ', 'Bathroom ', 'Boots ', 'Breakfast ', 'Bubblegum ', 'Chair ','Green Devil ','Dog-Duck ','Dragon ','Pen ','Pet-Sweep ','Scissors ','Shark ','Sweep ','Blanket ','Unicorn ','USB ','Water-Can ','Wine-Glass '],
+    
+    datasets: [
+      {
+        label: 'How Many Each Product Clicked ',
+        backgroundColor: 'blue',
+        borderColor: 'yelow',
+        data: clickArr
+      },
+      {
+        label: 'How Many Each Product viewed ',
+        backgroundColor: 'red',
+        borderColor: 'blue',
+        data: viewArr
+      }
+    ]
+
+  },
+
+  options: {}
+});}
+
+
+
+
+
+// function finalList(){
+    //     var list = document.getElementById("list");
+    //     var li = document.createElement('li')
+    //     list.appendChild(li)
+    //     for (var i = 0; i < Products.all.length; i++) {
+    //         var pro = Products.all[i]
+    //         li = document.createElement('li');
+    //         list.appendChild(li);
+    //         li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
+    //     }
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
