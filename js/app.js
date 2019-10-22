@@ -164,8 +164,8 @@ function myChart() {
     var viewArr = [];
     for (var i = 0; i < Products.all.length; i++) {
       var exact = Products.all[i];
-      headArr.push(exact.title + 'Click');
-      headArr.push(exact.title + 'View');
+      headArr.push(exact.title );
+      headArr.push(exact.title );
       clickArr.push(exact.clickCounter);
       viewArr.push(exact.viewsCounter);
       
