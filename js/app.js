@@ -14,6 +14,7 @@ function Products(head, src) {
     this.clickCounter = 0;
     this.viewsCounter = 0;
     Products.all.push(this);
+    // Products.items.push(this);
 }
 Products.rounds = 0
 var numberOfRounds = 25;
@@ -60,7 +61,7 @@ function allProducts() {
     leftImageItem.setAttribute('src', leftImage.src);
     var leftHead = document.getElementById('lefthead');
     leftHead.textContent = leftImage.head;
-    
+
     var rightImageItem = document.getElementById('rightimg');
     rightImageItem.setAttribute('src', rightImage.src);
     var rightHead = document.getElementById('righthead');
@@ -81,7 +82,7 @@ function allProducts() {
 
 }
 
-//Select randim product
+//Select random product
 function selection() {
     var leftrandom = Math.floor(Math.random() * Products.all.length);
     var rightrandom = Math.floor(Math.random() * Products.all.length);
@@ -135,11 +136,16 @@ function clicker(event) {
             // finalList();
             myChart()
 
+            updateProducts();
+            getProducts();
+            selection();
+            allProducts();
+
         } else {
             allProducts();
         }
     }
-     
+
     console.log('rounds: ', Products.rounds);
     console.log('clickedProduct: ', clickedProduct);
     console.log('clickCounter: ', clickedProduct.clickCounter);
@@ -154,8 +160,7 @@ allProducts();
 
 
 
-selection();
-allProducts();
+
 
 
 function myChart() {
@@ -163,57 +168,87 @@ function myChart() {
     var clickArr = [];
     var viewArr = [];
     for (var i = 0; i < Products.all.length; i++) {
-      var exact = Products.all[i];
-      headArr.push(exact.title + 'Click');
-      headArr.push(exact.title + 'View');
-      clickArr.push(exact.clickCounter);
-      viewArr.push(exact.viewsCounter);
-      
+        var exact = Products.all[i];
+        headArr.push(exact.title);
+        headArr.push(exact.title);
+        clickArr.push(exact.clickCounter);
+        viewArr.push(exact.viewsCounter);
+
     }
 
-var ctx = document.getElementById('chart').getContext('2d');
-console.log('Chart : ', Chart);
-var chart = new Chart(ctx, {
-  type: 'bar',
 
-  data: {
-    labels: ['Bag ', 'Banana ', 'Bathroom ', 'Boots ', 'Breakfast ', 'Bubblegum ', 'Chair ','Green Devil ','Dog-Duck ','Dragon ','Pen ','Pet-Sweep ','Scissors ','Shark ','Sweep ','Blanket ','Unicorn ','USB ','Water-Can ','Wine-Glass '],
-    
-    datasets: [
-      {
-        label: 'How Many Each Product Clicked ',
-        backgroundColor: 'blue',
-        borderColor: 'yelow',
-        data: clickArr
-      },
-      {
-        label: 'How Many Each Product viewed ',
-        backgroundColor: 'red',
-        borderColor: 'blue',
-        data: viewArr
-      }
-    ]
+    //adding chart
+    var ctx = document.getElementById('chart').getContext('2d');
+    console.log('Chart : ', Chart);
+    var chart = new Chart(ctx, {
+        type: 'bar',
 
-  },
+        data: {
+            labels: ['Bag ', 'Banana ', 'Bathroom ', 'Boots ', 'Breakfast ', 'Bubblegum ', 'Chair ', 'Green Devil ', 'Dog-Duck ', 'Dragon ', 'Pen ', 'Pet-Sweep ', 'Scissors ', 'Shark ', 'Sweep ', 'Blanket ', 'Unicorn ', 'USB ', 'Water-Can ', 'Wine-Glass '],
 
-  options: {}
-});}
+            datasets: [
+                {
+                    label: 'How Many Each Product Clicked ',
+                    backgroundColor: 'blue',
+                    borderColor: 'yelow',
+                    data: clickArr
+                },
+                {
+                    label: 'How Many Each Product viewed ',
+                    backgroundColor: 'red',
+                    borderColor: 'blue',
+                    data: viewArr
+                }
+            ]
+
+        },
+
+        options: {}
+    });
+}
 
 
+//Storage functions
+
+Products.items = [];
+function updateProducts() {
+    var productsString = JSON.stringify(Products.items);
+    localStorage.setItem('items', productsString);
+}
+
+function getProducts() {
+    var goods = localStorage.getItem('items');
+    var myProducts = JSON.parse(goods);
+    if (myProducts) {
+        for (var i = 0; i < myProducts.length; i++) {
+            var productObject = myProducts[i];
+            new Products(
+                productObject.head,
+                productObject.src,
+                productObject.clickCounter,
+                productObject.viewsCounter
+            );
+        }
+
+    }
+    selection();
+    allProducts();
+}
 
 
+//adding list
 
 // function finalList(){
-    //     var list = document.getElementById("list");
-    //     var li = document.createElement('li')
-    //     list.appendChild(li)
-    //     for (var i = 0; i < Products.all.length; i++) {
-    //         var pro = Products.all[i]
-    //         li = document.createElement('li');
-    //         list.appendChild(li);
-    //         li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
-    //     }
-    // }
+//         var list = document.getElementById("list");
+//         var li = document.createElement('li')
+//         list.appendChild(li)
+//         for (var i = 0; i < Products.all.length; i++) {
+//             var pro = Products.all[i]
+//             li = document.createElement('li');
+//             list.appendChild(li);
+//             li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
+//         }
+//     }
 
 
 
