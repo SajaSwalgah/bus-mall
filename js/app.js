@@ -49,7 +49,7 @@ Products.leftImage = document.getElementById('leftimg');
 Products.rightImage = document.getElementById('rightimg');
 Products.centeredImage = document.getElementById('centerimg');
 
-console.log('Products.all: ', Products.all);
+// console.log('Products.all: ', Products.all);
 
 
 
@@ -59,16 +59,19 @@ function allProducts() {
 
     var leftImageItem = document.getElementById('leftimg');
     leftImageItem.setAttribute('src', leftImage.src);
+
     var leftHead = document.getElementById('lefthead');
     leftHead.textContent = leftImage.head;
 
     var rightImageItem = document.getElementById('rightimg');
     rightImageItem.setAttribute('src', rightImage.src);
+
     var rightHead = document.getElementById('righthead');
     rightHead.textContent = rightImage.head;
 
     var centerdImageItem = document.getElementById('centerimg');
     centerdImageItem.setAttribute('src', centeredImage.src);
+
     var centeredHead = document.getElementById('centerhead');
     centeredHead.textContent = centeredImage.head;
 
@@ -128,16 +131,21 @@ function clicker(event) {
         allProducts();
 
         // remove the event listener
-        if (Products.rounds === 25) {
+        if (Products.rounds === numberOfRounds) {
 
             alert('You\'ve Consumed Your Clicks');
 
             document.getElementById("container").removeEventListener('click', clicker);
-            // finalList();
+            finalList();
             myChart()
 
-            updateProducts();
-            getProducts();
+            // Set item
+
+            var productsString = JSON.stringify(Products.all);
+            localStorage.setItem('items', productsString);
+
+            // updateProducts();
+            // getProducts();
             selection();
             allProducts();
 
@@ -155,6 +163,7 @@ function clicker(event) {
 
 
 document.getElementById("container").addEventListener('click', clicker);
+getProducts()
 selection();
 allProducts();
 
@@ -162,6 +171,44 @@ allProducts();
 
 
 
+//Storage function
+
+function getProducts() {
+    var goods = localStorage.getItem('items');
+
+
+    if (goods) {
+        var myProducts = JSON.parse(goods);
+        var instanceArray = [];
+        Products.all = instanceArray;
+        for (var i = 0; i < myProducts.length; i++) {
+            var productObject = myProducts[i];
+            var newInstance = new Products(productObject.head, productObject.src);
+            newInstance.clickCounter = productObject.clickCounter;
+            newInstance.viewsCounter = productObject.viewsCounter;
+
+        }
+
+    }
+
+}
+
+//adding list
+
+function finalList(){
+    var list = document.getElementById("list");
+    var li = document.createElement('li')
+    list.appendChild(li)
+    for (var i = 0; i < Products.all.length; i++) {
+        var pro = Products.all[i]
+        li = document.createElement('li');
+        list.appendChild(li);
+        li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
+    }
+}
+
+
+//adding chart
 
 function myChart() {
     var headArr = [];
@@ -175,9 +222,9 @@ function myChart() {
         viewArr.push(exact.viewsCounter);
 
     }
+    
 
 
-    //adding chart
     var ctx = document.getElementById('chart').getContext('2d');
     console.log('Chart : ', Chart);
     var chart = new Chart(ctx, {
@@ -208,47 +255,9 @@ function myChart() {
 }
 
 
-//Storage functions
-
-Products.items = [];
-function updateProducts() {
-    var productsString = JSON.stringify(Products.items);
-    localStorage.setItem('items', productsString);
-}
-
-function getProducts() {
-    var goods = localStorage.getItem('items');
-    var myProducts = JSON.parse(goods);
-    if (myProducts) {
-        for (var i = 0; i < myProducts.length; i++) {
-            var productObject = myProducts[i];
-            new Products(
-                productObject.head,
-                productObject.src,
-                productObject.clickCounter,
-                productObject.viewsCounter
-            );
-        }
-
-    }
-    selection();
-    allProducts();
-}
 
 
-//adding list
 
-// function finalList(){
-//         var list = document.getElementById("list");
-//         var li = document.createElement('li')
-//         list.appendChild(li)
-//         for (var i = 0; i < Products.all.length; i++) {
-//             var pro = Products.all[i]
-//             li = document.createElement('li');
-//             list.appendChild(li);
-//             li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
-//         }
-//     }
 
 
 
