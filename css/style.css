@@ -43,7 +43,7 @@ section div{
 img{
     width: 200px;
     border-style: dashed;
-    border-color: rgb(131, 200, 228);
+    border-color: rgb(226, 32, 168);
 }
 h2{
     background-color: rgb(235, 175, 225);
@@ -55,13 +55,19 @@ h2{
 }
 footer{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 30px;
     text-align: left;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 400px;
-    width: 600px;
-    height: 400px; 
+    margin-top: 500px;
+   color: darkgreen;
+    width: 1000px;
+    height: 100px; 
     
-   
+    
 }
+#chart{
+    padding-left: auto;
+    padding-right: auto;
+}
+
