@@ -55,7 +55,7 @@ h2{
 }
 footer{
     font-weight: bold;
-    font-size: 30px;
+    font-size: 20px;
     text-align: left;
     margin-left: auto;
     margin-right: auto;
@@ -70,4 +70,9 @@ footer{
     padding-left: auto;
     padding-right: auto;
 }
+
+#list2{
+    float: right;
+}
+
 

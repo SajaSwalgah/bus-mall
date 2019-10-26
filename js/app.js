@@ -7,47 +7,47 @@ var rightImage = null;
 var centeredImage = null;
 
 
-function Products(head, src) {
+function Product(head, src) {
 
     this.head = head;
     this.src = src;
     this.clickCounter = 0;
     this.viewsCounter = 0;
-    Products.all.push(this);
+    Product.all.push(this);
     // Products.items.push(this);
 }
-Products.rounds = 0
+Product.rounds = 0
 var numberOfRounds = 25;
-Products.all = [];
-Products.appeared = [];
+Product.all = [];
+Product.appeared = [];
 
 
 //my products
-new Products('Space Bags', 'img/bag.jpg');
-new Products('Banan Cutter', 'img/banana.jpg');
-new Products('Mobile Holder', 'img/bathroom.jpg');
-new Products('Strange Boots', 'img/boots.jpg');
-new Products('Breakfast Maker', 'img/breakfast.jpg');
-new Products('Bubble Gum', 'img/bubblegum.jpg');
-new Products('Chair With a Tumor', 'img/chair.jpg');
-new Products('Green Devil', 'img/cthulhu.jpg');
-new Products('Duck Face for your Dog', 'img/dog-duck.jpg');
-new Products('Dragon Meat', 'img/dragon.jpg');
-new Products('Pen Collection', 'img/pen.jpg');
-new Products('Pet Sweep', 'img/pet-sweep.jpg');
-new Products('Unique Scissors', 'img/scissors.jpg');
-new Products('Baby Shark do do do', 'img/shark.jpg');
-new Products('Baby Sweep', 'img/sweep.png');
-new Products('Unique Blanket', 'img/tauntaun.jpg');
-new Products('Unicorn Meat', 'img/unicorn.jpg');
-new Products('Tail USB', 'img/usb.gif');
-new Products('Water Can', 'img/water-can.jpg');
-new Products('Wine Glass', 'img/wine-glass.jpg');
+new Product('Space Bags', 'img/bag.jpg');
+new Product('Banan Cutter', 'img/banana.jpg');
+new Product('Mobile Holder', 'img/bathroom.jpg');
+new Product('Strange Boots', 'img/boots.jpg');
+new Product('Breakfast Maker', 'img/breakfast.jpg');
+new Product('Bubble Gum', 'img/bubblegum.jpg');
+new Product('Chair With a Tumor', 'img/chair.jpg');
+new Product('Green Devil', 'img/cthulhu.jpg');
+new Product('Duck Face for your Dog', 'img/dog-duck.jpg');
+new Product('Dragon Meat', 'img/dragon.jpg');
+new Product('Pen Collection', 'img/pen.jpg');
+new Product('Pet Sweep', 'img/pet-sweep.jpg');
+new Product('Unique Scissors', 'img/scissors.jpg');
+new Product('Baby Shark do do do', 'img/shark.jpg');
+new Product('Baby Sweep', 'img/sweep.png');
+new Product('Unique Blanket', 'img/tauntaun.jpg');
+new Product('Unicorn Meat', 'img/unicorn.jpg');
+new Product('Tail USB', 'img/usb.gif');
+new Product('Water Can', 'img/water-can.jpg');
+new Product('Wine Glass', 'img/wine-glass.jpg');
 
 //IDs
-Products.leftImage = document.getElementById('leftimg');
-Products.rightImage = document.getElementById('rightimg');
-Products.centeredImage = document.getElementById('centerimg');
+Product.leftImage = document.getElementById('leftimg');
+Product.rightImage = document.getElementById('rightimg');
+Product.centeredImage = document.getElementById('centerimg');
 
 // console.log('Products.all: ', Products.all);
 
@@ -87,22 +87,22 @@ function allProducts() {
 
 //Select random product
 function selection() {
-    var leftrandom = Math.floor(Math.random() * Products.all.length);
-    var rightrandom = Math.floor(Math.random() * Products.all.length);
-    var centerrandom = Math.floor(Math.random() * Products.all.length);
+    var leftrandom = Math.floor(Math.random() * Product.all.length);
+    var rightrandom = Math.floor(Math.random() * Product.all.length);
+    var centerrandom = Math.floor(Math.random() * Product.all.length);
 
 
     //No repeated products
-    while (Products.appeared.includes(leftrandom) || Products.appeared.includes(centerrandom) || Products.appeared.includes(rightrandom) || leftrandom === centerrandom || centerrandom == rightrandom || rightrandom == leftrandom) {
-        var leftrandom = Math.floor(Math.random() * Products.all.length);
-        var rightrandom = Math.floor(Math.random() * Products.all.length);
-        var centerrandom = Math.floor(Math.random() * Products.all.length);
+    while (Product.appeared.includes(leftrandom) || Product.appeared.includes(centerrandom) || Product.appeared.includes(rightrandom) || leftrandom === centerrandom || centerrandom == rightrandom || rightrandom == leftrandom) {
+        var leftrandom = Math.floor(Math.random() * Product.all.length);
+        var rightrandom = Math.floor(Math.random() * Product.all.length);
+        var centerrandom = Math.floor(Math.random() * Product.all.length);
     }
 
     //Display products
-    leftImage = Products.all[leftrandom];
-    rightImage = Products.all[rightrandom];
-    centeredImage = Products.all[centerrandom];
+    leftImage = Product.all[leftrandom];
+    rightImage = Product.all[rightrandom];
+    centeredImage = Product.all[centerrandom];
 }
 
 
@@ -126,12 +126,12 @@ function clicker(event) {
     if (clickedProduct) {
 
         clickedProduct.clickCounter++;
-        Products.rounds++
+        Product.rounds++
         selection();
         allProducts();
 
         // remove the event listener
-        if (Products.rounds === numberOfRounds) {
+        if (Product.rounds === numberOfRounds) {
 
             alert('You\'ve Consumed Your Clicks');
 
@@ -141,7 +141,7 @@ function clicker(event) {
 
             // Set item
 
-            var productsString = JSON.stringify(Products.all);
+            var productsString = JSON.stringify(Product.all);
             localStorage.setItem('items', productsString);
 
             // updateProducts();
@@ -154,7 +154,7 @@ function clicker(event) {
         }
     }
 
-    console.log('rounds: ', Products.rounds);
+    console.log('rounds: ', Product.rounds);
     console.log('clickedProduct: ', clickedProduct);
     console.log('clickCounter: ', clickedProduct.clickCounter);
 
@@ -180,10 +180,10 @@ function getProducts() {
     if (goods) {
         var myProducts = JSON.parse(goods);
         var instanceArray = [];
-        Products.all = instanceArray;
+        Product.all = instanceArray;
         for (var i = 0; i < myProducts.length; i++) {
             var productObject = myProducts[i];
-            var newInstance = new Products(productObject.head, productObject.src);
+            var newInstance = new Product(productObject.head, productObject.src);
             newInstance.clickCounter = productObject.clickCounter;
             newInstance.viewsCounter = productObject.viewsCounter;
 
@@ -199,13 +199,18 @@ function finalList(){
     var list = document.getElementById("list");
     var li = document.createElement('li')
     list.appendChild(li)
-    for (var i = 0; i < Products.all.length; i++) {
-        var pro = Products.all[i]
+    for (var i = 0; i < Product.all.length ; i++) {
+        var pro = Product.all[i]
         li = document.createElement('li');
         list.appendChild(li);
         li.textContent=  pro.head + " had " + pro.clickCounter + " votes and was shown " + pro.viewsCounter + " times.";
     }
+  
 }
+function myFunction() {
+    document.getElementById("list").style.color = "red";
+  }
+
 
 
 //adding chart
@@ -214,8 +219,8 @@ function myChart() {
     var headArr = [];
     var clickArr = [];
     var viewArr = [];
-    for (var i = 0; i < Products.all.length; i++) {
-        var exact = Products.all[i];
+    for (var i = 0; i < Product.all.length; i++) {
+        var exact = Product.all[i];
         headArr.push(exact.title);
         headArr.push(exact.title);
         clickArr.push(exact.clickCounter);
