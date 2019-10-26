@@ -4,7 +4,7 @@
 
 body{
     text-align: center;
-    background-color:lightskyblue;
+    background-color:rgb(184, 214, 233);
     background-size: 1300px;
 }
 
@@ -43,7 +43,7 @@ section div{
 img{
     width: 200px;
     border-style: dashed;
-    border-color: rgb(226, 32, 168);
+    border-color: deeppink;
 }
 h2{
     background-color: rgb(235, 175, 225);
